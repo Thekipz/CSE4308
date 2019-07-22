@@ -41,9 +41,6 @@ def SearchDict(dictionary, previous, query, numCreated):
                 node = Node(previous, city, previous.totalDistance, output[k])
                 numCreated += 1
                 adjacent.append(node)
-                #print(output[k]) #distance to adjacent city
-                #print(query) #start city
-                #print("".join(k).replace(query,'')) #adjacent city name
     return adjacent, numCreated
 
         
@@ -58,7 +55,6 @@ class Node:
         self.totalDistance = total + distance
         self.currCity = curr
     
-#SearchDict((ReadFile("input1.txt")),Node(None,"London",0,0), "London") 
 
 
 def reconstructRoute(node):
@@ -118,10 +114,7 @@ def UniSearch(mapping, start, end):
                 maxNodes = len(fringe)
             fringe.sort(key = lambda x: x.totalDistance)
             
-            loop(numExpanded, numCreated, maxNodes)
-            #test = fringe.pop()
-            #print(test.currCity)
-            #print(test.previousNode.currCity)
+            loop(numExpanded, numCreated, maxN
             
     numExpanded = 0
     loop(numExpanded, numCreated, maxNodes)
@@ -167,9 +160,6 @@ def InfSearch(mapping, start, end, heuristic):
                 maxNodes = len(fringe)
             fringe.sort(key = ( lambda x: x.totalDistance + heuristic[x.currCity]))
             loop(numExpanded, numCreated, maxNodes, heuristic)
-            #test = fringe.pop()
-            #print(test.currCity)
-            #print(test.previousNode.currCity)
             
     numExpanded = 0
     loop(numExpanded, numCreated, maxNodes, heuristic)
@@ -183,7 +173,3 @@ if(len(sys.argv)==4):
 if(len(sys.argv)==5):
     heuristic = sys.argv[4]
     InfSearch((ReadFile(path)),start, end, ReadHeuristic(heuristic))
-
-
-#UniSearch((ReadFile("input1.txt")), "Bremen","Kassel")
-#InfSearch((ReadFile("input1.txt")), "Bremen","Kassel",ReadHeuristic("heuristic.txt"))
