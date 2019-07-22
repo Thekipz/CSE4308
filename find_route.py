@@ -6,7 +6,7 @@ Created on Thu Jul 11 12:47:10 2019
 """
 import sys
 
-
+# read the input file and create a dictionary in the form (city1, city2) => distance 
 def ReadFile(path):
     mapping = {}
     file_open = open(path,'r')
@@ -19,8 +19,7 @@ def ReadFile(path):
         #mapping[word[1],word[0]] = distance
     return mapping
 
-output = ReadFile("input1.txt")
-
+# read the heuristic file and create a dictionary
 def ReadHeuristic(path):
     heuristic = {}
     file_open = open(path,'r')
@@ -32,6 +31,7 @@ def ReadHeuristic(path):
         heuristic[word[0]] = distance
     return heuristic
 
+#Searches dictionary for all adjacent nodes
 def SearchDict(dictionary, previous, query, numCreated):
     adjacent = []
     for k in output.keys():
@@ -93,6 +93,7 @@ def UniSearch(mapping, start, end):
             return
         node = fringe.pop(0)
         
+        #Check if goal is reached
         if(node.currCity == end):
             
             print("nodes expanded:", numExpanded)
@@ -101,7 +102,7 @@ def UniSearch(mapping, start, end):
             print("route:\n")
             reconstructRoute(node)
             return node
-        
+        #Checks if node is in the closed set
         if(node.currCity in closed):
             return loop(numExpanded, numCreated, maxNodes)
         else:
@@ -110,8 +111,10 @@ def UniSearch(mapping, start, end):
            
             while(len(adjacent)!= 0):
                 fringe.append(adjacent.pop())
+            #Keeps track of max nodes at any given time
             if (len(fringe)>maxNodes):
                 maxNodes = len(fringe)
+            #Sort the fringe by lowest distance
             fringe.sort(key = lambda x: x.totalDistance)
             
             loop(numExpanded, numCreated, maxN
